@@ -1,0 +1,529 @@
+[
+  {
+    "compositionId": "-MX8I_QLhOXdRVp5c6Bz",
+    "compositionName": null,
+    "mainComposition": true,
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "accentColor": {
+          "angle": 0,
+          "centerX": 50,
+          "centerY": 50,
+          "focalAngle": 0,
+          "focalDistance": 0,
+          "keepAspect": false,
+          "offset": 0,
+          "radius": 50,
+          "scale": 100,
+          "solidColor": {
+            "a": 1,
+            "b": 6,
+            "g": 6,
+            "r": 183
+          },
+          "spreadMethod": "pad",
+          "stops": [
+            {
+              "color": "#ff0000",
+              "offset": 0,
+              "opacity": 1
+            },
+            {
+              "color": "#00ff00",
+              "offset": 0.5,
+              "opacity": 1
+            },
+            {
+              "color": "#0000ff",
+              "offset": 1,
+              "opacity": 1
+            }
+          ],
+          "type": "solid"
+        },
+        "accentText": {
+          "a": 1,
+          "b": 255,
+          "g": 255,
+          "r": 255
+        }
+      }
+    }
+  },
+  {
+    "compositionId": "06beea16-952c-48c2-8a5b-a6f3449a47d4",
+    "compositionName": "Score Bug - Tennis",
+    "animation": {
+      "state": "In"
+    },
+    "controlNode": {
+      "payload": {
+        "Team 1 Color": {
+          "angle": 0,
+          "centerX": 50,
+          "centerY": 50,
+          "focalAngle": 0,
+          "focalDistance": 0,
+          "keepAspect": false,
+          "offset": 0,
+          "radius": 50,
+          "scale": 100,
+          "solidColor": {
+            "a": 1,
+            "b": 60,
+            "g": 60,
+            "r": 60
+          },
+          "spreadMethod": "pad",
+          "stops": [
+            {
+              "color": "#ff0000",
+              "offset": 0,
+              "opacity": 1
+            },
+            {
+              "color": "#00ff00",
+              "offset": 0.5,
+              "opacity": 1
+            },
+            {
+              "color": "#0000ff",
+              "offset": 1,
+              "opacity": 1
+            }
+          ],
+          "type": "solid"
+        },
+        "Team 2 Color": {
+          "angle": 0,
+          "centerX": 50,
+          "centerY": 50,
+          "focalAngle": 0,
+          "focalDistance": 0,
+          "keepAspect": false,
+          "offset": 0,
+          "radius": 50,
+          "scale": 100,
+          "solidColor": {
+            "a": 1,
+            "b": 78,
+            "g": 78,
+            "r": 78
+          },
+          "spreadMethod": "pad",
+          "stops": [
+            {
+              "color": "#ff0000",
+              "offset": 0,
+              "opacity": 1
+            },
+            {
+              "color": "#00ff00",
+              "offset": 0.5,
+              "opacity": 1
+            },
+            {
+              "color": "#0000ff",
+              "offset": 1,
+              "opacity": 1
+            }
+          ],
+          "type": "solid"
+        },
+        "player1Name": "",
+        "player1Score": "",
+        "player1Serve": false,
+        "player1Set1": "",
+        "player1Set2": "",
+        "player1Set3": "",
+        "player2Name": "",
+        "player2Score": "",
+        "player2Serve": false,
+        "player2Set1": "",
+        "player2Set2": "",
+        "player2Set3": ""
+      }
+    }
+  },
+  {
+    "compositionId": "2606b2b5-082e-4406-80b4-8b11da3af36f",
+    "compositionName": "Upper Right - 1 Line",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "text": "Upper Right Text"
+      }
+    }
+  },
+  {
+    "compositionId": "2675716d-451c-4e76-b52d-6bc1f1e023b3",
+    "compositionName": "Background Image",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "backgroundImage": "//image.singular.live/12086e0462c894187cf486fc291e0d58/images/0SSYwHSIkboAVnXJw0ImEF.png"
+      }
+    }
+  },
+  {
+    "compositionId": "355a74fd-62eb-434b-b83a-d41ab28666bb",
+    "compositionName": "Lower - Team or Player Bio",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "headshotActive": true,
+        "logo1": "//image.singular.live/12086e0462c894187cf486fc291e0d58/images/7z4Zo5opftfq94PoEZQNQm.png",
+        "logo1PositionX": "-12",
+        "playerHeadshot": "//image.singular.live/12086e0462c894187cf486fc291e0d58/images/2iXeTF94lgxSo0o9PYu7nE.png",
+        "teamColor": {
+          "angle": 0,
+          "centerX": 50,
+          "centerY": 50,
+          "focalAngle": 0,
+          "focalDistance": 0,
+          "keepAspect": false,
+          "offset": 0,
+          "radius": 50,
+          "scale": 100,
+          "solidColor": {
+            "a": 1,
+            "b": 60,
+            "g": 60,
+            "r": 60
+          },
+          "spreadMethod": "pad",
+          "stops": [
+            {
+              "color": "#ff0000",
+              "offset": 0,
+              "opacity": 1
+            },
+            {
+              "color": "#00ff00",
+              "offset": 0.5,
+              "opacity": 1
+            },
+            {
+              "color": "#0000ff",
+              "offset": 1,
+              "opacity": 1
+            }
+          ],
+          "type": "solid"
+        },
+        "text": "Player Bio\n2 Lines of Information",
+        "title": "TITLE"
+      }
+    }
+  },
+  {
+    "compositionId": "3b53f332-f127-4dbf-accb-9977111ea9c5",
+    "compositionName": "Upper Right - Social Media",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "socialMediaLogo": "//assets.singular.live/12086e0462c894187cf486fc291e0d58/svgs/1NazNq05b11URTioABHB46_w512h512.svg",
+        "text": "Username or URL"
+      }
+    }
+  },
+  {
+    "compositionId": "44b94f2a-23b0-4f08-a95a-cec1aea89e81",
+    "compositionName": "Fullscreen - Matchup",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "dropline": "Dropline",
+        "logo1": "//image.singular.live/12086e0462c894187cf486fc291e0d58/images/0O5hzDfgbHL1MbHE5zbRqy.png",
+        "logo1Size": "100",
+        "logo2": "//image.singular.live/12086e0462c894187cf486fc291e0d58/images/0sDGZb8Z8r0jiEHOkhO5z6.png",
+        "logo2Size": "100",
+        "subtitle": "Subtitle",
+        "team1Color": {
+          "angle": 0,
+          "centerX": 50,
+          "centerY": 50,
+          "focalAngle": 0,
+          "focalDistance": 0,
+          "keepAspect": false,
+          "offset": 0,
+          "radius": 50,
+          "scale": 100,
+          "solidColor": {
+            "a": 1,
+            "b": 60,
+            "g": 60,
+            "r": 60
+          },
+          "spreadMethod": "pad",
+          "stops": [
+            {
+              "color": "#ff0000",
+              "offset": 0,
+              "opacity": 1
+            },
+            {
+              "color": "#00ff00",
+              "offset": 0.5,
+              "opacity": 1
+            },
+            {
+              "color": "#0000ff",
+              "offset": 1,
+              "opacity": 1
+            }
+          ],
+          "type": "solid"
+        },
+        "team1Name": "TEAM NAME 1",
+        "team2Color": {
+          "angle": 0,
+          "centerX": 50,
+          "centerY": 50,
+          "focalAngle": 0,
+          "focalDistance": 0,
+          "keepAspect": false,
+          "offset": 0,
+          "radius": 50,
+          "scale": 100,
+          "solidColor": {
+            "a": 1,
+            "b": 78,
+            "g": 78,
+            "r": 78
+          },
+          "spreadMethod": "pad",
+          "stops": [
+            {
+              "color": "#ff0000",
+              "offset": 0,
+              "opacity": 1
+            },
+            {
+              "color": "#00ff00",
+              "offset": 0.5,
+              "opacity": 1
+            },
+            {
+              "color": "#0000ff",
+              "offset": 1,
+              "opacity": 1
+            }
+          ],
+          "type": "solid"
+        },
+        "team2Name": "TEAM NAME 2",
+        "title": "TITLE"
+      }
+    }
+  },
+  {
+    "compositionId": "5bae6f0b-5b7e-4990-bf5c-c6296719c99b",
+    "compositionName": "Lower - 1 Line",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "text": "Title or Name"
+      }
+    }
+  },
+  {
+    "compositionId": "61694c8d-4d50-b0b9-ea3a-4ace4e6d3501",
+    "compositionName": "rightContent",
+    "animation": {
+      "state": "Out1"
+    }
+  },
+  {
+    "compositionId": "73bd8f0e-726d-47f5-ae54-a40660b40569",
+    "compositionName": "Freeform Image",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "image": "https://assets.singular.live/12086e0462c894187cf486fc291e0d58/svgs/4bIqkCNSZAoudT1myq6Sii_w327h32.svg",
+        "positionX": "40",
+        "positionY": "40",
+        "size": "15",
+        "transparency": "100"
+      }
+    }
+  },
+  {
+    "compositionId": "79e8d721-f8fa-f58a-bf2c-3f00f56a8bc5",
+    "compositionName": "New Sub-Comp",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "title": "Welcome"
+      }
+    }
+  },
+  {
+    "compositionId": "7d5591b9-a03c-405a-86d9-2e56e52e9430",
+    "compositionName": "Lower - 2 Line",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "Line 1 Text": "Line One Text",
+        "Line 2 Text": "Line Two Text"
+      }
+    }
+  },
+  {
+    "compositionId": "8663f3fa-f6e6-4d65-a9dc-f68df1184762",
+    "compositionName": "Upper Right - 2 Line",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "Line 1 Text": "Line One Text",
+        "Line 2 Text": "Line Two Text"
+      }
+    }
+  },
+  {
+    "compositionId": "8dd3dad4-620a-4f88-b3f3-49e0a8bb34a9",
+    "compositionName": "Freeform Text",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "positionX": "40",
+        "positionY": "35",
+        "size": "40",
+        "text": "Freeform Text",
+        "tranpsarency": "100"
+      }
+    }
+  },
+  {
+    "compositionId": "aaaae2bd-2fae-0a00-9d87-25ec326915da",
+    "compositionName": "leftContent",
+    "animation": {
+      "state": "Out1"
+    }
+  },
+  {
+    "compositionId": "e2840a63-771b-41a5-91e2-38fa823ed325",
+    "compositionName": "Baseline - Static",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "baselineText": "Baseline Text"
+      }
+    }
+  },
+  {
+    "compositionId": "f12eafa1-ab55-4816-922c-7496f388fd03",
+    "compositionName": "Lower - Matchup",
+    "animation": {
+      "state": "Out1"
+    },
+    "controlNode": {
+      "payload": {
+        "dropline": "Dropline",
+        "logo1": "//image.singular.live/12086e0462c894187cf486fc291e0d58/images/5RS7fApiyL7nIHoukU0wXJ.png",
+        "logo2": "//image.singular.live/12086e0462c894187cf486fc291e0d58/images/07BO1406T1LR08CjOwbQZr.png",
+        "team1Color": {
+          "angle": 0,
+          "centerX": 50,
+          "centerY": 50,
+          "focalAngle": 0,
+          "focalDistance": 0,
+          "keepAspect": false,
+          "offset": 0,
+          "radius": 50,
+          "scale": 100,
+          "solidColor": {
+            "a": 1,
+            "b": 60,
+            "g": 60,
+            "r": 60
+          },
+          "spreadMethod": "pad",
+          "stops": [
+            {
+              "color": "#ff0000",
+              "offset": 0,
+              "opacity": 1
+            },
+            {
+              "color": "#00ff00",
+              "offset": 0.5,
+              "opacity": 1
+            },
+            {
+              "color": "#0000ff",
+              "offset": 1,
+              "opacity": 1
+            }
+          ],
+          "type": "solid"
+        },
+        "team1Name": "Team Name 1",
+        "team2Color": {
+          "angle": 0,
+          "centerX": 50,
+          "centerY": 50,
+          "focalAngle": 0,
+          "focalDistance": 0,
+          "keepAspect": false,
+          "offset": 0,
+          "radius": 50,
+          "scale": 100,
+          "solidColor": {
+            "a": 1,
+            "b": 78,
+            "g": 78,
+            "r": 78
+          },
+          "spreadMethod": "pad",
+          "stops": [
+            {
+              "color": "#ff0000",
+              "offset": 0,
+              "opacity": 1
+            },
+            {
+              "color": "#00ff00",
+              "offset": 0.5,
+              "opacity": 1
+            },
+            {
+              "color": "#0000ff",
+              "offset": 1,
+              "opacity": 1
+            }
+          ],
+          "type": "solid"
+        },
+        "team2Name": "Team Name 2"
+      }
+    }
+  }
+]
