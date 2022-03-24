@@ -10,11 +10,17 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient;
 import org.springframework.web.reactive.socket.client.WebSocketClient;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.medialive.MediaLiveAsyncClient;
+import software.amazon.awssdk.services.medialive.MediaLiveClient;
 
 @Configuration
 public class AppConfig {
 
-  @Value("${singular.url}")
+  private static final String PROFILE_NAME = "sandbox";
+
+  @Value("${singular.api.url}")
   private String singularUrl;
 
   @Value("${singular.username}")
@@ -40,5 +46,22 @@ public class AppConfig {
   @Bean
   public ObjectMapper getObjectMapper() {
     return JsonMapper.builder().findAndAddModules().build();
+  }
+
+
+  @Bean
+  MediaLiveClient mediaLive() {
+    return MediaLiveClient.builder()
+        .credentialsProvider(ProfileCredentialsProvider.create(PROFILE_NAME))
+        .region(Region.EU_WEST_1)
+        .build();
+  }
+
+  @Bean
+  MediaLiveAsyncClient mediaLiveAsync() {
+    return MediaLiveAsyncClient.builder()
+        .credentialsProvider(ProfileCredentialsProvider.create(PROFILE_NAME))
+        .region(Region.EU_WEST_1)
+        .build();
   }
 }

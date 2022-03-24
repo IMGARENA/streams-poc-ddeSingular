@@ -2,6 +2,7 @@ package com.imgarena.dde.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.imgarena.dde.aws.MediaLiveOverlay;
 import com.imgarena.dde.data.SingularPayloadGenerator;
 import com.imgarena.dde.dto.DDEEvent;
 import com.imgarena.dde.dto.MatchStatusWrapper;
@@ -31,12 +32,10 @@ public class DDEConnector {
       """;
 
   private final WebSocketClient client;
-
   private final WebClient singularClient;
-
   private final ObjectMapper objectMapper;
-
   private final SingularPayloadGenerator generator;
+  private final MediaLiveOverlay mediaLiveOverlay;
 
   @Value("${dde.api.host}")
   private String ddeHost;
@@ -44,16 +43,20 @@ public class DDEConnector {
   private String ddeToken;
 
 
-  public DDEConnector(WebSocketClient client, WebClient webClient, ObjectMapper objectMapper, SingularPayloadGenerator generator) {
+  public DDEConnector(WebSocketClient client, WebClient webClient, ObjectMapper objectMapper, SingularPayloadGenerator generator,
+      MediaLiveOverlay mediaLiveOverlay) {
     this.client = client;
     this.singularClient = webClient;
     this.objectMapper = objectMapper;
     this.generator = generator;
+    this.mediaLiveOverlay = mediaLiveOverlay;
   }
 
-  public void listen(String eventId) throws URISyntaxException {
+  public void listen(String eventId, String channelId, String overlayURL) throws URISyntaxException {
+
     var authJson = AUTH_JSON.formatted(ddeToken);
     var uri = new URI(DDE_URI.formatted(ddeHost, eventId));
+
     LOG.info("Connecting to {}", uri);
 
     client
@@ -70,7 +73,9 @@ public class DDEConnector {
                         .flatMap(this::callSingular)
                         .then()
                     )
-        .subscribe();
+        .subscribe(unused -> {}, throwable -> {},
+            () -> mediaLiveOverlay.deleteOverlay(channelId),
+            subscription -> mediaLiveOverlay.insertOverlay(channelId, overlayURL));
   }
 
   private String readPayload(String msgPayload)  {

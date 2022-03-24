@@ -51,7 +51,7 @@ public class SingularPayloadGenerator {
 
   public String setScores(PointScore pointScore) {
     if (pointScore.getTimestamp().isBefore(scoringStartedAt)) {
-      return StringUtils.EMPTY;
+      //return StringUtils.EMPTY;
     }
     var serveTeam = pointScore.getServer().getTeam().getMarker();
     var serveTeamA = "1".equals(serveTeam);
