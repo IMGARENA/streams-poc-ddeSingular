@@ -26,6 +26,6 @@ public class DdeSingularApplication implements ApplicationRunner {
   public void run(ApplicationArguments args) throws Exception {
     var eventId = args.getNonOptionArgs().get(0);
     LOG.info("Listening score for event: {}", eventId);
-    ddeConnector.listen(eventId, "6079750", "https://app.singular.live/output/4L1W9okQSUWQtPPbEfTYVu/Output?aspect=16:9");
+    ddeConnector.listen(eventId, "6079750");
   }
 }

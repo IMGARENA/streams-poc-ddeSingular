@@ -7,6 +7,8 @@ import com.imgarena.dde.data.SingularPayloadGenerator;
 import com.imgarena.dde.dto.DDEEvent;
 import com.imgarena.dde.dto.MatchStatusWrapper;
 import com.imgarena.dde.dto.PointScore;
+import com.imgarena.dde.singular.SingularConnector;
+import com.imgarena.dde.singular.dto.SingularAppInstance;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -14,9 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
@@ -32,7 +32,7 @@ public class DDEConnector {
       """;
 
   private final WebSocketClient client;
-  private final WebClient singularClient;
+  private final SingularConnector singularConnector;
   private final ObjectMapper objectMapper;
   private final SingularPayloadGenerator generator;
   private final MediaLiveOverlay mediaLiveOverlay;
@@ -43,19 +43,23 @@ public class DDEConnector {
   private String ddeToken;
 
 
-  public DDEConnector(WebSocketClient client, WebClient webClient, ObjectMapper objectMapper, SingularPayloadGenerator generator,
+  public DDEConnector(WebSocketClient client, SingularConnector singularConnector, ObjectMapper objectMapper, SingularPayloadGenerator generator,
       MediaLiveOverlay mediaLiveOverlay) {
     this.client = client;
-    this.singularClient = webClient;
+    this.singularConnector = singularConnector;
     this.objectMapper = objectMapper;
     this.generator = generator;
     this.mediaLiveOverlay = mediaLiveOverlay;
   }
 
-  public void listen(String eventId, String channelId, String overlayURL) throws URISyntaxException {
+  public void listen(String eventId, String channelId) throws URISyntaxException {
 
     var authJson = AUTH_JSON.formatted(ddeToken);
     var uri = new URI(DDE_URI.formatted(ddeHost, eventId));
+
+    SingularAppInstance singularAppInstance = singularConnector.createAppInstance(eventId);
+    singularConnector.loadComposition(singularAppInstance.id(), SingularConnector.COMPOSITION_ID);
+    singularConnector.updateShowData(singularAppInstance.id(), SingularConnector.SHOW_SCOREBUG_JSON).subscribe();
 
     LOG.info("Connecting to {}", uri);
 
@@ -70,12 +74,15 @@ public class DDEConnector {
                         .map(this::readPayload))
                         .filter(StringUtils::isNotBlank)
                         .delayElements(Duration.ofSeconds(2))
-                        .flatMap(this::callSingular)
+                        .flatMap(data -> singularConnector.updateShowData(singularAppInstance.id(), data))
                         .then()
                     )
         .subscribe(unused -> {}, throwable -> {},
-            () -> mediaLiveOverlay.deleteOverlay(channelId),
-            subscription -> mediaLiveOverlay.insertOverlay(channelId, overlayURL));
+            () -> {
+              mediaLiveOverlay.deleteOverlay(channelId);
+              singularConnector.deleteAppInstance(singularAppInstance.id());
+            },
+            subscription -> mediaLiveOverlay.insertOverlay(channelId, singularAppInstance.onAirURL()));
   }
 
   private String readPayload(String msgPayload)  {
@@ -92,20 +99,5 @@ public class DDEConnector {
       //LOG.warn("Error parsing JSON", e);
     }
     return StringUtils.EMPTY;
-  }
-
-  private Mono<String> callSingular(String s) {
-    LOG.info("Calling Singular...");
-    return singularClient.put().bodyValue(s)
-        .exchangeToMono(response -> {
-          LOG.info("Response Status: {}", response.statusCode().getReasonPhrase());
-          if (response.statusCode().equals(HttpStatus.OK)) {
-            return response.bodyToMono(String.class);
-          }
-          else {
-            //just return the error msg
-            return Mono.just(response.statusCode().getReasonPhrase());
-          }
-        });
   }
 }
