@@ -20,7 +20,7 @@ public class MediaLiveOverlay {
   }
 
   public void insertOverlay(String channelId, String overlayURL) {
-    LOG.info("Inserting graphic overlay in MediaLive channel={}", channelId);
+    LOG.info("Activating graphic overlay in MediaLive channel={}", channelId);
     var batchUpdateScheduleRequest =
         BatchUpdateScheduleRequest.builder()
             .channelId(channelId)
@@ -46,38 +46,49 @@ public class MediaLiveOverlay {
       client.batchUpdateSchedule(batchUpdateScheduleRequest).join();
     } catch (Exception e) {
       LOG.warn(
-          "Error adding graphic overlay to MediaLive channel={} due to {}",
+          "Error activating graphic overlay to MediaLive channel={} due to {}",
           channelId,
           ExceptionUtils.getRootCauseMessage(e));
     }
   }
 
   public void deleteOverlay(String channelId) {
-    LOG.info("Deleting graphic overlay for MediaLive channel={}", channelId);
-    var batchUpdateScheduleRequest =
+    LOG.info("Deactivating graphic overlay for MediaLive channel={}", channelId);
+    var batchUpdateScheduleRequestForDeactivate =
         BatchUpdateScheduleRequest.builder()
             .channelId(channelId)
             .creates(
                 builder ->
                     builder
                         .scheduleActions(
-                            builder1 ->
-                                builder1
+                            scheduleBuilder ->
+                                scheduleBuilder
                                     .actionName("DeactivateScoreBug")
                                     .scheduleActionStartSettings(
-                                        builder2 ->
-                                            builder2.immediateModeScheduleActionStartSettings(SdkBuilder::build))
+                                        actionStartBuilder ->
+                                            actionStartBuilder.immediateModeScheduleActionStartSettings(SdkBuilder::build))
                                     .scheduleActionSettings(
-                                        builder2 ->
-                                            builder2.motionGraphicsImageDeactivateSettings(SdkBuilder::build))
+                                        actionSettingsBuilder ->
+                                            actionSettingsBuilder.motionGraphicsImageDeactivateSettings(SdkBuilder::build))
                                     .build())
                         .build())
+
             .build();
+
+    var batchUpdateScheduleRequestForDelete =
+        BatchUpdateScheduleRequest.builder()
+            .channelId(channelId)
+            .deletes(
+                builder -> builder.actionNames("ActivateScoreBug", "DeactivateScoreBug")
+            )
+            .build();
+
     try {
-      client.batchUpdateSchedule(batchUpdateScheduleRequest).join();
+      client.batchUpdateSchedule(batchUpdateScheduleRequestForDeactivate).join();
+      client.batchUpdateSchedule(batchUpdateScheduleRequestForDelete).join();
     } catch (Exception e) {
       LOG.warn(
-          "Error deleting graphic overlay from MediaLive channel={} due to {}",
+          "Error deactivating or deleting graphic overlay from MediaLive channel={} due to {}",
           channelId,
           ExceptionUtils.getRootCauseMessage(e));
     }
