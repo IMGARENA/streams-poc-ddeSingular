@@ -29,6 +29,7 @@ public class SingularConnector {
           }
       ]
       """;
+  private static final String APPINSTANCES_ID = "/appinstances/{appId}";
 
   private final WebClient singularClient;
 
@@ -44,7 +45,7 @@ public class SingularConnector {
         .bodyValue(new CreateAppInstanceRequest(FOLDER_ID, APPTEMPLATE_ID, name))
         .exchangeToMono(
             response -> {
-              LOG.info("Response Status: {}", response.statusCode().getReasonPhrase());
+              LOG.info("Create app instance Response Status: {}", response.statusCode().getReasonPhrase());
               if (response.statusCode().equals(HttpStatus.OK)) {
                 return response.bodyToMono(SingularAppInstance.class);
               } else {
@@ -56,24 +57,26 @@ public class SingularConnector {
 
   public void loadComposition(Long appId, Long compositionId) {
     LOG.info("Loading composition id {} in app id {}", compositionId, appId);
-    singularClient.put().uri(uriBuilder -> uriBuilder.path("/appinstances/{appId}/composition").build(appId))
+    singularClient
+        .put()
+        .uri(uriBuilder -> uriBuilder.path(APPINSTANCES_ID + "/composition").build(appId))
         .bodyValue(new LoadCompositionRequest(compositionId))
         .exchangeToMono(response -> {
-          LOG.info("Response Status: {}", response.statusCode().getReasonPhrase());
+          LOG.info("Loading composition Response Status: {}", response.statusCode().getReasonPhrase());
           return Mono.empty();
         })
-        .block();
+        .subscribe();
   }
 
   public Mono<String> updateShowData(Long appId, String data) {
     LOG.info("Updating Singular app show data...");
     return singularClient
         .put()
-        .uri(uriBuilder -> uriBuilder.path("/appinstances/{appId}/control").build(appId))
+        .uri(uriBuilder -> uriBuilder.path(APPINSTANCES_ID + "/control").build(appId))
         .bodyValue(data)
         .exchangeToMono(
             response -> {
-              LOG.info("Response Status: {}", response.statusCode().getReasonPhrase());
+              LOG.info("Updating show data Response Status: {}", response.statusCode().getReasonPhrase());
               if (response.statusCode().equals(HttpStatus.OK)) {
                 return response.bodyToMono(String.class);
               } else {
@@ -83,14 +86,14 @@ public class SingularConnector {
             });
   }
 
-  public void deleteAppInstance(Long id) {
-    LOG.info("Deleting Singular app instance {}", id);
+  public void deleteAppInstance(Long appId) {
+    LOG.info("Deleting Singular app instance {}", appId);
     singularClient
         .delete()
-        .uri(uriBuilder -> uriBuilder.path("/appinstances/{id}").build(id))
+        .uri(uriBuilder -> uriBuilder.path(APPINSTANCES_ID).build(appId))
         .exchangeToMono(
             response -> {
-              LOG.info("Response Status: {}", response.statusCode().getReasonPhrase());
+              LOG.info("Deleting app instance Response Status: {}", response.statusCode().getReasonPhrase());
               if (response.statusCode().equals(HttpStatus.OK)) {
                 return response.bodyToMono(String.class);
               } else {

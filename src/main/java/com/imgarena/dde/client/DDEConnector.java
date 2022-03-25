@@ -16,7 +16,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
@@ -57,7 +59,8 @@ public class DDEConnector {
     var authJson = AUTH_JSON.formatted(ddeToken);
     var uri = new URI(DDE_URI.formatted(ddeHost, eventId));
 
-    SingularAppInstance singularAppInstance = singularConnector.createAppInstance(eventId);
+    final var singularAppInstance = singularConnector.createAppInstance(eventId);
+    LOG.info("Singular App instance available at: {}", singularAppInstance.onAirURL());
     singularConnector.loadComposition(singularAppInstance.id(), SingularConnector.COMPOSITION_ID);
     singularConnector.updateShowData(singularAppInstance.id(), SingularConnector.SHOW_SCOREBUG_JSON).subscribe();
 
@@ -79,10 +82,10 @@ public class DDEConnector {
                     )
         .subscribe(unused -> {}, throwable -> {},
             () -> {
-              mediaLiveOverlay.deleteOverlay(channelId);
+              mediaLiveOverlay.deactivateAndDeleteOverlay(channelId, singularAppInstance.id());
               singularConnector.deleteAppInstance(singularAppInstance.id());
             },
-            subscription -> mediaLiveOverlay.insertOverlay(channelId, singularAppInstance.onAirURL()));
+            subscription -> mediaLiveOverlay.activateOverlay(channelId, singularAppInstance.onAirURL(), singularAppInstance.id()));
   }
 
   private String readPayload(String msgPayload)  {
@@ -100,4 +103,5 @@ public class DDEConnector {
     }
     return StringUtils.EMPTY;
   }
+
 }

@@ -13,13 +13,16 @@ public class MediaLiveOverlay {
 
   private static final Logger LOG = LoggerFactory.getLogger(MediaLiveOverlay.class);
 
+  private static final String ACTIVATE_ACTION = "ActivateScoreBug_%d";
+  private static final String DEACTIVATE_ACTION = "DeactivateScoreBug_%d";
+
   private final MediaLiveAsyncClient client;
 
   public MediaLiveOverlay(MediaLiveAsyncClient client) {
     this.client = client;
   }
 
-  public void insertOverlay(String channelId, String overlayURL) {
+  public void activateOverlay(String channelId, String overlayURL, Long appInstanceId) {
     LOG.info("Activating graphic overlay in MediaLive channel={}", channelId);
     var batchUpdateScheduleRequest =
         BatchUpdateScheduleRequest.builder()
@@ -30,7 +33,7 @@ public class MediaLiveOverlay {
                         .scheduleActions(
                             builder1 ->
                                 builder1
-                                    .actionName("ActivateScoreBug")
+                                    .actionName(ACTIVATE_ACTION.formatted(appInstanceId))
                                     .scheduleActionStartSettings(
                                         builder2 ->
                                             builder2.immediateModeScheduleActionStartSettings(
@@ -52,7 +55,7 @@ public class MediaLiveOverlay {
     }
   }
 
-  public void deleteOverlay(String channelId) {
+  public void deactivateAndDeleteOverlay(String channelId, Long appInstanceId) {
     LOG.info("Deactivating graphic overlay for MediaLive channel={}", channelId);
     var batchUpdateScheduleRequestForDeactivate =
         BatchUpdateScheduleRequest.builder()
@@ -63,7 +66,7 @@ public class MediaLiveOverlay {
                         .scheduleActions(
                             scheduleBuilder ->
                                 scheduleBuilder
-                                    .actionName("DeactivateScoreBug")
+                                    .actionName(DEACTIVATE_ACTION.formatted(appInstanceId))
                                     .scheduleActionStartSettings(
                                         actionStartBuilder ->
                                             actionStartBuilder.immediateModeScheduleActionStartSettings(SdkBuilder::build))
@@ -79,7 +82,7 @@ public class MediaLiveOverlay {
         BatchUpdateScheduleRequest.builder()
             .channelId(channelId)
             .deletes(
-                builder -> builder.actionNames("ActivateScoreBug", "DeactivateScoreBug")
+                builder -> builder.actionNames(ACTIVATE_ACTION.formatted(appInstanceId), DEACTIVATE_ACTION.formatted(appInstanceId))
             )
             .build();
 
