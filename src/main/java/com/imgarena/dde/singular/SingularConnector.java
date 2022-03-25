@@ -65,7 +65,7 @@ public class SingularConnector {
           LOG.info("Loading composition Response Status: {}", response.statusCode().getReasonPhrase());
           return Mono.empty();
         })
-        .subscribe();
+        .block();
   }
 
   public Mono<String> updateShowData(Long appId, String data) {
